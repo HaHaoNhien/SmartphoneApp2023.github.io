@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ファイルのパス</title>
+    
+    <link rel="icon" href="hint.ico">
+    <!-- Font Awesome Twitter,Facebookなどのアイコン用フォント index.cssよりも前に定義...index.css high priority -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Font Awesome animation -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+
+  <body>
+    <header>
+      <h1>file path sample</h1>
+    </header>
+    
+    <section class="container01">
+      <div class="lemon-container01">
+
+        <div class ="folder-block01">
+          <p class="whitesmoke">folder tree</p>
+          <div class="folder-item01">
+            <img src="../../../img/file_path.png" alt="picture file_path">
+          </div>
+        </div>
+
+        <div class ="lemon-block01">
+          <div class="lemon-item01">
+            <img src="../../img/lemon1.jpg" alt="picture lemon1">
+            <div class="mask">
+              <div class="caption">index.htmlの２つ上の階層のimgフォルダのlemon1.png</div>
+            </div>
+          </div>
+          <p class="whitesmoke">../../img/lemon1.jpg</p>
+        </div>
+
+        <div class ="lemon-block01">
+          <div class="lemon-item01">
+            <img src="img/lemon2.jpg" alt="picture lemon2">
+            <div class="mask">
+              <div class="caption">index.htmlと同じ階層のimgフォルダのlemon2.png</div>
+            </div>
+          </div>
+          <p class="whitesmoke">img/lemon2.jpg</p>
+        </div>
+
+        <div class ="lemon-block01">
+          <div class="lemon-item01">
+            <img src="../../../img/fruits/lemon3.jpg" alt="picture lemon3">
+            <div class="mask">
+              <div class="caption">index.htmlの3つ上の階層のimgフォルダの中のfruitsフォルダのlemon3.png</div>
+            </div>
+          </div>
+          <p class="whitesmoke">../../../img/fruits/lemon3.jpg</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+      <p>
+        <i class="fa fa-cog fa-spin animated font05" aria-hidden="true"></i>
+        <span class="mgn-01">Copyright 2021 Sundaidenshi</span>
+        <i class="fa fa-bicycle faa-passing animated font06" aria-hidden="true"></i>
+      </p>
+      <div class="filler01"></div>
+    </footer>
+  </body>
+
+</html>

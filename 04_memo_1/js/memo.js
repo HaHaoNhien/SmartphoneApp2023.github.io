@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded",
             window.alert("このブラウザはLocal　Storage　機能が実装されていません。");
             return;
         } else {
-            savelocalStorage.setItem(); // 2.Local Storage への保存
+            savelocalStorage(); // 2.Local Storage への保存
         }
     },false
 );
@@ -27,7 +27,7 @@ function savelocalStorage(){
                 return;
             } else {
                 localStorage.setItem(key,value);
-                let w_msg = "LocalStorageに"　+ key + " " + value + "を保存しました。";
+                let w_msg = "LocalStorageに" + key + " " + value + "を保存しました。";
                 window.alert(w_msg);
                 document.getElementById("textKey").value = "";
                 document.getElementById("textMemo").value = "";

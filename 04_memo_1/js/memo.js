@@ -43,7 +43,7 @@ function viewStorage() {
 
     const list = document.getElementById("list");
     //htmlのテーブル初期化
-    while (list.row[0]) list.deleteRow(0);
+    while (list.rows[0]) list.deleteRow(0);
 
     //localStorage すべての情報の取得
     for (let i=0; i<localStorage.length; i++) {

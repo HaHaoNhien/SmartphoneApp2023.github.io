@@ -8,8 +8,11 @@ window.addEventListener("DOMContentLoaded",
             window.alert("このブラウザはLocal　Storage　機能が実装されていません。");
             return;
         } else {
-            viewStorage();  // localStorage からのデータの取得とテーブルへ表示
-            saveLocalStorage(); // 2.Local Storage への保存
+            viewStorage();          // 1.LocalStorage からのデータの取得とテーブルへ表示
+            saveLocalStorage();     // 2.LocalStorage への保存
+            delLocalStorage();      // 3.LocalStorage から１件削除
+            allClearLocalStorage(); // 4.localStorage　からすべて削除
+            selectTable();          // 5.データ選択
         }
     },false
 );
@@ -38,6 +41,67 @@ function saveLocalStorage(){
     );
 };
 
+        // 3.LocalStorageから１件削除
+        function delLocalStorage() {
+            const del = document.getElementById("del");
+            del.addEventListener("click",
+                function(e) {
+                    e.preventDefault();
+                    let w_sel = "0";
+                    w_sel = selectRadioBtn();
+
+                    if(w_sel === "1"){
+                        const key = document.getElementById("textKey").value;
+                        const value = document.getElementById("textKey").value;
+                        localStorage.removeItem(key);
+                        viewStorage();  //localStorageからのデータの取得とテーブルへ表示
+                        let w_msg = "LocalStorageから" + key + "　" + value + "を削除（delete)　しました。";
+                        window.alert(w_msg);
+                        document.getElementById("textKey").value = "";
+                        document.getElementById("textMemo").value = "";
+                    }
+                }, false
+            );
+        };
+
+        // 4.LocalStorageからすべて削除
+        function allClearLocalStorage() {
+            const allClear = document.getElementById("allClear");
+            allClear.addEventListener("click",
+                function(e) {
+                    e.preventDefault();
+                    let w_confirm = confirm("LocalStorageのデータをすべて削除(all　clear）します。\n よろしいでしょうか？");
+                    //確認ダイアログで「ok
+                }
+            )
+        }
+
+        // 5.データ選択
+        function selectTable() {
+            const select = document.getElementById("select");
+            select.addEventListener("click",
+                function(e) {
+                    e.preventDefault;
+                    selectRadioBtn();       //テーブルからデータ選択
+                }, false
+            );
+        };
+            //テーブルからデータ選択
+        function selectRadioBtn() {
+            let w_sel = "0";    //選択されていれば、”1”にする
+            const radio1 = document.getElementsByName("radio1");
+            const table1 = document.getElementById("table1");
+    
+            for(let i=0; i < radio1.length; i++) {
+                if(radio1[i].checked) {
+                    document.getElementById("textKey").value = table1.rows[i+1].cells[1].firstChild.data;
+                    document.getElementById("textMemo").value = table1.rows[i+1].cells[2].firstChild.data;
+                    return w_sel = "1";
+                }
+            }
+            window.alert("１つ選択（select）してください。");
+        };
+
 //localStorageからのデータの取得とテーブルへ表示
 function viewStorage() {
 
@@ -64,3 +128,4 @@ function viewStorage() {
         td3.innerHTML = localStorage.getItem(w_key);
     }
 };
+

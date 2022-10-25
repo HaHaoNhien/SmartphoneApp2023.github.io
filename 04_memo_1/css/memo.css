@@ -94,7 +94,7 @@ textarea::placeholder{
   margin-left:3em;
   text-align: left;
 }
-#save{
+#save, #select, #del, #allClear{
   padding: 0.5em;
   border-radius: 0.3em;
   color: whitesmoke;

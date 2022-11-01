@@ -30,12 +30,16 @@ function saveLocalStorage(){
                 window.alert("Key, Memo　はいずれも必須です。");
                 return;
             } else {
-                localStorage.setItem(key, value);
-                viewStorage();              // localStorage からのデータの取得とテーブルへ表示
-                let w_msg = "LocalStorageに" + key + " " + value + "を保存しました。";
-                window.alert(w_msg);
-                document.getElementById("textKey").value = "";
-                document.getElementById("textMemo").value = "";
+                let w_confirm = window.confirm("LocalStorageに\n 「" + key + " " + value +  "」 \n を保存 (save) しますか？"); //version-up1 add
+                //確認ダイアログで「OK」を押されたとき、保存する　version-up1 add
+                if (w_confirm === true) {
+                    localStorage.setItem(key, value);
+                    viewStorage();              // localStorage からのデータの取得とテーブルへ表示
+                    let w_msg = "LocalStorageに" + key + " " + value + "を保存しました。";
+                    window.alert(w_msg);
+                    document.getElementById("textKey").value = "";
+                    document.getElementById("textMemo").value = "";
+                } //version-up1 add
             }
         }, false
     );
@@ -47,18 +51,23 @@ function saveLocalStorage(){
             del.addEventListener("click",
                 function(e) {
                     e.preventDefault();
-                    let w_sel = "0";
-                    w_sel = selectRadioBtn();
+                    let w_sel = "0";            //選択されていれば、”１”が返却される
+                    //w_sel = selectRadioBtn();
+                    w_sel = selectCheckBox();   //テーブルからデータ選択　version-up2 chg: selectRadioBtn ==> selectCheckBox
 
                     if(w_sel === "1"){
-                        const key = document.getElementById("textKey").value;
-                        const value = document.getElementById("textKey").value;
-                        localStorage.removeItem(key);
-                        viewStorage();  //localStorageからのデータの取得とテーブルへ表示
-                        let w_msg = "LocalStorageから" + key + "　" + value + "を削除（delete)　しました。";
-                        window.alert(w_msg);
-                        document.getElementById("textKey").value = "";
-                        document.getElementById("textMemo").value = "";
+                            const key = document.getElementById("textKey").value;
+                            const value = document.getElementById("textMemo").value;
+                        let w_confirm = window.confirm("LocalStorageに\n 「" + key + " " + value +  "」 \n を削除 (delete) しますか？"); //version-up1 add
+                        //確認ダイアログで「OK」を押されたとき、削除する　version-up1 add
+                        if (w_confirm === true) {
+                            localStorage.removeItem(key);
+                            viewStorage();  //localStorageからのデータの取得とテーブルへ表示
+                            let w_msg = "LocalStorageから" + key + "　" + value + "を削除（delete)　しました。";
+                            window.alert(w_msg);
+                            document.getElementById("textKey").value = "";
+                            document.getElementById("textMemo").value = "";
+                        } //version-up1 add
                     }
                 }, false
             );
@@ -90,24 +99,37 @@ function saveLocalStorage(){
             select.addEventListener("click",
                 function(e) {
                     e.preventDefault;
-                    selectRadioBtn();       //テーブルからデータ選択
+                   //w_sel = selectRadioBtn();
+                   w_sel = selectCheckBox();   //テーブルからデータ選択　version-up2 chg: selectRadioBtn ==> selectCheckBox
                 }, false
             );
         };
             //テーブルからデータ選択
-        function selectRadioBtn() {
+        function selectCheckBox() {     //version-up2 chg: selectRadioBtn ==> selectCheckBox
             let w_sel = "0";    //選択されていれば、”1”にする
-            const radio1 = document.getElementsByName("radio1");
+            let w_cnt = 0;      //選択されているチェックボックスの数 //version-up2 add
+            const chkbox1 = document.getElementsByName("chkbox1"); //version-up2 chg: radio1 ==> chkbox1
             const table1 = document.getElementById("table1");
+            let w_textKey = "";     // work version-up2 add
+            let w_textMemo = "";    // work version-up2 add
     
-            for(let i=0; i < radio1.length; i++) {
-                if(radio1[i].checked) {
-                    document.getElementById("textKey").value = table1.rows[i+1].cells[1].firstChild.data;
-                    document.getElementById("textMemo").value = table1.rows[i+1].cells[2].firstChild.data;
-                    return w_sel = "1";
-                }
+            for(let i=0; i < chkbox11.length; i++) {        // version-up2 chg: radio1 ==> chkbox1
+                if(chkbox1[i].checked) {
+                    if(w_cnt === 0)  {       // version-up2 chg: radio1 ==> chkbox1
+                        w_textKey = table1.rows[i+1].cells[1].firstChild.data; // version-up2 chg document.getElementById("textKey").value ==> w_textKey
+                        w_textMemo = table1.rows[i+1].cells[2].firstChild.data; // version-up2 chg document.getElementById("textMemo").value ==> w_textMemo
+                        //return w_sel = "1";
+                    } //version-up2 add
+                    w_cnt++; //選択されているチェックボックスの数をカウント　version-up2 add
+                }   
             }
-            window.alert("１つ選択（select）してください。");
+            document.getElementById("textKey").value = w_textKey;
+            document.getElementById("textMemo").value = w_textMemo;
+            if(w_cnt === 1){
+                return w_sel = "1";
+            }else{
+                window.alert("１つ選択（select）してください。");
+            }
         };
 
 //localStorageからのデータの取得とテーブルへ表示
@@ -131,11 +153,10 @@ function viewStorage() {
         tr.appendChild(td2);
         tr.appendChild(td3);
 
-        td1.innerHTML = "<input name='radio1' type='radio'>" ;
+        td1.innerHTML = "<input name='chkbox1' type='chkbox'>" ;      //version-up2 chg: radio1 ==> chkbox1
         td2.innerHTML = w_key;
         td3.innerHTML = localStorage.getItem(w_key);
     }
-};
 
         //　jQueryのplugin　tablesorterを使ってテーブルのソート
         //　sortList：引数1．．．最初からソートしておく例を指定、引数2．．．0...昇順、1．．．降順
@@ -144,3 +165,5 @@ function viewStorage() {
         });                             //tablesort add
 
         $("#table1").trigger("update"); //tablesort add
+};
+

@@ -111,7 +111,7 @@ textarea::placeholder{
 @media screen and (max-width: 980px) {
   body {
     background-position: 80% 0;
-    background-size: auto 1000px;
+    background-size: auto 3000px;
   }
   @media screen and (max-width: 1500px) {
     body {

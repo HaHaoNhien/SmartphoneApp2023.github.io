@@ -71,9 +71,17 @@ function saveLocalStorage(){
                 function(e) {
                     e.preventDefault();
                     let w_confirm = confirm("LocalStorageのデータをすべて削除(all　clear）します。\n よろしいでしょうか？");
-                    //確認ダイアログで「ok
+                    //確認ダイアログで「OK」を押された時、すべて削除する
+                    if (w_confirm === true) {
+                        localStorage.clear();
+                        viewStorage();  //localStorageからのデータの取得とテーブルへ表示
+                        let w_msg = "LocalStorageのデータをすべてを削除（all clear)　しました。";
+                        window.alert(w_msg);
+                        document.getElementById("textKey").value = "";
+                        document.getElementById("textMemo").value = "";
+                    }
                 }
-            )
+            ), false
         }
 
         // 5.データ選択
@@ -129,3 +137,10 @@ function viewStorage() {
     }
 };
 
+        //　jQueryのplugin　tablesorterを使ってテーブルのソート
+        //　sortList：引数1．．．最初からソートしておく例を指定、引数2．．．0...昇順、1．．．降順
+        $("#table1").tablesorter({      //tablesort add
+            sortList: [[1, 0]]          //tablesort add
+        });                             //tablesort add
+
+        $("#table1").trigger("update"); //tablesort add

@@ -100,7 +100,7 @@ function saveLocalStorage(){
                 function(e) {
                     e.preventDefault;
                    //w_sel = selectRadioBtn();
-                   w_sel = selectCheckBox();   //テーブルからデータ選択　version-up2 chg: selectRadioBtn ==> selectCheckBox
+                   selectCheckBox();   //テーブルからデータ選択　version-up2 chg: selectRadioBtn ==> selectCheckBox
                 }, false
             );
         };
@@ -113,12 +113,12 @@ function saveLocalStorage(){
             let w_textKey = "";     // work version-up2 add
             let w_textMemo = "";    // work version-up2 add
     
-            for(let i=0; i < chkbox11.length; i++) {        // version-up2 chg: radio1 ==> chkbox1
+            for(let i=0; i < chkbox1.length; i++) {        // version-up2 chg: radio1 ==> chkbox1
                 if(chkbox1[i].checked) {
                     if(w_cnt === 0)  {       // version-up2 chg: radio1 ==> chkbox1
                         w_textKey = table1.rows[i+1].cells[1].firstChild.data; // version-up2 chg document.getElementById("textKey").value ==> w_textKey
                         w_textMemo = table1.rows[i+1].cells[2].firstChild.data; // version-up2 chg document.getElementById("textMemo").value ==> w_textMemo
-                        //return w_sel = "1";
+                        //return w_sel = "1"; version-up2 del
                     } //version-up2 add
                     w_cnt++; //選択されているチェックボックスの数をカウント　version-up2 add
                 }   
@@ -153,7 +153,7 @@ function viewStorage() {
         tr.appendChild(td2);
         tr.appendChild(td3);
 
-        td1.innerHTML = "<input name='chkbox1' type='chkbox'>" ;      //version-up2 chg: radio1 ==> chkbox1
+        td1.innerHTML = "<input name='chkbox1' type='checkbox'>" ;      //version-up2 chg: radio1 ==> chkbox1
         td2.innerHTML = w_key;
         td3.innerHTML = localStorage.getItem(w_key);
     }

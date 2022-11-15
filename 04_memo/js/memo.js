@@ -27,19 +27,37 @@ function saveLocalStorage(){
                 
             // 値の入力チェック
             if (key=="" || value=="") {
-                window.alert("Key, Memo　はいずれも必須です。");
+                Swal.fire({
+                      title : "Memo app" //タイトル設定
+                    , html  : "Key, Memoはいずれも必須です。" //メッセージ内容をここに設定
+                    , type  : "error" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                    , allowOutsideClick  :  false   //枠外クリックは許可しない
+                });
+                //window.alert("Key, Memo　はいずれも必須です。");
                 return;
             } else {
-                let w_confirm = window.confirm("LocalStorageに\n 「" + key + " " + value +  "」 \n を保存 (save) しますか？"); //version-up1 add
-                //確認ダイアログで「OK」を押されたとき、保存する　version-up1 add
-                if (w_confirm === true) {
-                    localStorage.setItem(key, value);
-                    viewStorage();              // localStorage からのデータの取得とテーブルへ表示
-                    let w_msg = "LocalStorageに" + key + " " + value + "を保存しました。";
-                    window.alert(w_msg);
-                    document.getElementById("textKey").value = "";
-                    document.getElementById("textMemo").value = "";
-                } //version-up1 add
+                let w_msg = "LocalStorageに\n 「" + key + " " + value + "」\nを保存　（save）しますか？";
+                Swal.fire({
+                      title : "Memo app" //タイトル設定
+                    , html  :  w_msg //メッセージ内容をここに設定
+                    , type  : "question" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                    , showCancelButton  :  true   //枠外クリックは許可しない
+                }).then(function(result) {
+                     //確認ダイアログで「OK」を押されたとき、保存する
+                     if (result.value === true) {
+                        localStorage.setItem(key, value);
+                        viewStorage();              // localStorage からのデータの取得とテーブルへ表示
+                        let w_msg = "LocalStorageに" + key + " " + value + "を保存しました。";
+                        Swal.fire({
+                            title : "Memo app" //タイトル設定
+                          , html  :  w_msg //メッセージ内容をここに設定
+                          , type  : "success" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                          , allowOutsideClick  :  false   //枠外クリックは許可しない
+                      });
+                      document.getElementById("textKey").value = "";
+                      document.getElementById("textMemo").value = "";
+                     }
+                });
             }
         }, false
     );
@@ -59,24 +77,37 @@ function saveLocalStorage(){
                     if(w_cnt >= 1){     //version-up3 chg w_sel === "1" ===> w_cnt >= 1
                             // const key = document.getElementById("textKey").value;        //version-up3 del
                             // const value = document.getElementById("textMemo").value;     //version-up3 del
-                        let w_confirm = window.confirm("LocalStorageから選択されている" + w_cnt + "件を削除 (delete) しますか？"); //version-up3 chg
-                        //確認ダイアログで「OK」を押されたとき、削除する　version-up1 add
-                        if (w_confirm === true) {
-                            for(let i=0; i < chkbox1.length; i++) {        // version-up3 add
-                                if(chkbox1[i].checked) {       // version-up3 add
-                                    localStorage.removeItem(table1.rows[i+1].cells[1].firstChild.data); //version-up3 chg
-                                }   //version-up3 add
-                            }
-                            viewStorage();  //localStorageからのデータの取得とテーブルへ表示
-                            let w_msg = "LocalStorageから" + w_cnt + "件を削除（delete)　しました。";  //version-up3 chg
-                            window.alert(w_msg);
-                            document.getElementById("textKey").value = "";
-                            document.getElementById("textMemo").value = "";
-                        } //version-up1 add
-                    }
-                }, false
-            );
-        };
+                            
+                        let w_msg ="LocalStorageから選択されている" + w_cnt + "件を削除 (delete) しますか？"; //version-up3 chg
+                        Swal.fire({
+                              title : "Memo app" //タイトル設定
+                            , html  :  w_msg //メッセージ内容をここに設定
+                            , type  : "question" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                            , showCancelButton  :  true   //枠外クリックは許可しない
+                        }).then(function(result) {
+                            //確認ダイアログで「OK」を押されたとき、保存する
+                                if (result.value === true) {
+                                    for(let i=0; i < chkbox1.length; i++) {        // version-up3 add
+                                        if(chkbox1[i].checked) {       // version-up3 add
+                                            localStorage.removeItem(table1.rows[i+1].cells[1].firstChild.data); //version-up3 chg
+                                        }   //version-up3 add
+                                    }
+                                   viewStorage();              // localStorage からのデータの取得とテーブルへ表示
+                                   let w_msg = "LocalStorageから" + w_cnt + "件を削除（delete)　しました。";  //version-up3 chg
+                                   Swal.fire({
+                                       title : "Memo app" //タイトル設定
+                                     , html  :  w_msg //メッセージ内容をここに設定
+                                     , type  : "success" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                                     , allowOutsideClick  :  false   //枠外クリックは許可しない
+                                 });
+                                 document.getElementById("textKey").value = "";
+                                 document.getElementById("textMemo").value = "";
+                                }
+                            });
+                        }
+                    }, false
+                );
+            };
 
         // 4.LocalStorageからすべて削除
         function allClearLocalStorage() {
@@ -84,17 +115,30 @@ function saveLocalStorage(){
             allClear.addEventListener("click",
                 function(e) {
                     e.preventDefault();
-                    let w_confirm = confirm("LocalStorageのデータをすべて削除(all　clear）します。\n よろしいでしょうか？");
-                    //確認ダイアログで「OK」を押された時、すべて削除する
-                    if (w_confirm === true) {
-                        localStorage.clear();
-                        viewStorage();  //localStorageからのデータの取得とテーブルへ表示
-                        let w_msg = "LocalStorageのデータをすべてを削除（all clear)　しました。";
-                        window.alert(w_msg);
-                        document.getElementById("textKey").value = "";
-                        document.getElementById("textMemo").value = "";
+                    let w_msg ="LocalStorageのデータをすべて削除(all　clear）します。\n よろしいでしょうか？"; //version-up3 chg
+                        Swal.fire({
+                              title : "Memo app" //タイトル設定
+                            , html  :  w_msg //メッセージ内容をここに設定
+                            , type  : "question" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                            , showCancelButton  :  true   //枠外クリックは許可しない
+                        }).then(function(result) {
+                            //確認ダイアログで「OK」を押されたとき、すべて削除する
+                            
+                                if (result.value === true) {
+                                   localStorage.clear();
+                                   viewStorage();              // localStorage からのデータの取得とテーブルへ表示
+                                   let w_msg = "LocalStorageのデータをすべてを削除（all clear)　しました。";  
+                                   Swal.fire({
+                                       title : "Memo app" //タイトル設定
+                                     , html  :  w_msg //メッセージ内容をここに設定
+                                     , type  : "success" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                                     , allowOutsideClick  :  false   //枠外クリックは許可しない
+                                 });
+                                 document.getElementById("textKey").value = "";
+                                 document.getElementById("textMemo").value = "";
+                                }
+                         });
                     }
-                }
             ), false
         }
 
@@ -137,7 +181,13 @@ function saveLocalStorage(){
                 if(w_cnt === 1){
                     return w_cnt;   // version-up3 chg w_sel = "1" ==> w_cnt
                 }else{
-                    window.alert("１つ選択（select）してください。");
+                    Swal.fire({
+                        title : "Memo app" //タイトル設定
+                      , html  : "１つ選択（select）してください。" //メッセージ内容をここに設定
+                      , type  : "error" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                      , allowOutsideClick  :  false   //枠外クリックは許可しない
+                  });
+
                 }
             }   //version-up3 add
 
@@ -145,7 +195,12 @@ function saveLocalStorage(){
                 if(w_cnt >= 1){
                     return w_cnt;   // version-up3 chg w_sel = "1" ==> w_cnt
                 }else{
-                    window.alert("１つ以上選択（select）してください。");
+                    Swal.fire({
+                        title : "Memo app" //タイトル設定
+                      , html  : "１つ以上選択（select）してください。" //メッセージ内容をここに設定
+                      , type  : "error" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                      , allowOutsideClick  :  false   //枠外クリックは許可しない
+                  });
                 }
             }   //version-up3 add
         };

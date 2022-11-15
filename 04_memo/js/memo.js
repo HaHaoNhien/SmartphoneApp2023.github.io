@@ -67,9 +67,8 @@ function saveLocalStorage(){
                                     localStorage.removeItem(table1.rows[i+1].cells[1].firstChild.data); //version-up3 chg
                                 }   //version-up3 add
                             }
-                            localStorage.removeItem(key);
                             viewStorage();  //localStorageからのデータの取得とテーブルへ表示
-                            let w_msg = "LocalStorageから" + i + "件を削除（delete)　しました。";  //version-up3 chg
+                            let w_msg = "LocalStorageから" + w_cnt + "件を削除（delete)　しました。";  //version-up3 chg
                             window.alert(w_msg);
                             document.getElementById("textKey").value = "";
                             document.getElementById("textMemo").value = "";
@@ -110,7 +109,9 @@ function saveLocalStorage(){
                 }, false
             );
         };
+
             //テーブルからデータ選択
+
         function selectCheckBox(mode) {     //version-up3 chg: 引数：なし==>mode
             //let w_sel = "0";    //選択されていれば、”1”にする //version-up3 del
             let w_cnt = 0;      //選択されているチェックボックスの数 //version-up2 add
@@ -132,7 +133,7 @@ function saveLocalStorage(){
             document.getElementById("textKey").value = w_textKey;
             document.getElementById("textMemo").value = w_textMemo;
 
-            if (selectCheckBox(mode === "select")) { //version-up3 add
+            if (mode === "select") { //version-up3 add
                 if(w_cnt === 1){
                     return w_cnt;   // version-up3 chg w_sel = "1" ==> w_cnt
                 }else{
@@ -140,11 +141,11 @@ function saveLocalStorage(){
                 }
             }   //version-up3 add
 
-            if (selectCheckBox(mode === "del")) { //version-up3 add
+            if (mode === "del") { //version-up3 add
                 if(w_cnt >= 1){
                     return w_cnt;   // version-up3 chg w_sel = "1" ==> w_cnt
                 }else{
-                    window.alert("１つ選択（select）してください。");
+                    window.alert("１つ以上選択（select）してください。");
                 }
             }   //version-up3 add
         };

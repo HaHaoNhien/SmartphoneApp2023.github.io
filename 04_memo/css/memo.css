@@ -94,7 +94,7 @@ textarea::placeholder{
   margin-left:3em;
   text-align: left;
 }
-#save{
+#save, #select, #del, #allClear{
   padding: 0.5em;
   border-radius: 0.3em;
   color: whitesmoke;
@@ -108,9 +108,16 @@ textarea::placeholder{
 /* https://www.design-memo.com/coding/css-media-queries */
 /********************************************************/
 /* mobileのときのスタイル */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 980px) {
   body {
-    background-size: auto 9000px;
+    background-position: 80% 0;
+    background-size: auto 3000px;
+  }
+  @media screen and (max-width: 1500px) {
+    body {
+      background-position: 80% 0;
+      background-size: auto auto;
+    }
   }
   /* ラベル */
   label {
@@ -147,4 +154,36 @@ textarea::placeholder{
   font-size: 1.5em;
   background: rgb(26, 212, 212);
   cursor: pointer; /*カーソルをポインターの形（かたち）にする*/
+}
+
+/****************************************************/
+/* テーブル */
+/****************************************************/
+table{
+  table-layout: fixed;
+  width: 80%;
+  margin-left: 3em;
+  border-collapse: collapse;
+  opacity: 0.9;
+}
+table th{
+  background: grey;
+}
+table th, table td{
+  padding: 0.5em 0;
+  border: solid 0.1em #fff;
+  color: white;
+  text-align: center;
+}
+table tr{
+  background: #46aef7;
+}
+.width10{
+  width: 10%;
+}
+.width30{
+  width: 30%;
+}
+.width60{
+  width: 60%;
 }

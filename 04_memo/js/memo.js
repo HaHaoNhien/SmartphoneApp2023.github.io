@@ -107,6 +107,44 @@ function saveLocalStorage(){
                         }
                     }, false
                 );
+
+                // version-up5 add-str
+                // DELETE 1 ROW
+
+                const table1 = document.getElementById("table1");
+                table1.addEventListener("click", (e) => { 
+                        if(e.target.classList.contains("trash") === true){
+                            let index = e.target.parentNode.parentNode.sectionRowIndex;
+                            const key = table1.rows[index + 1].cells[1].firstChild.data;
+                            const value = table1.rows[index + 1].cells[2].firstChild.data;
+                            let w_delete ="LocalStorageから \n " + key + " " + value + "\n を削除 (delete) しますか？"; //version-up3 chg
+                                    Swal.fire({
+                                          title : "Memo app" //タイトル設定
+                                        , html  :  w_delete //メッセージ内容をここに設定
+                                        , type  : "question" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                                        , showCancelButton  :  true   //枠外クリックは許可しない
+                                    }).then(result => {
+                                        //確認ダイアログで「OK」を押されたとき、保存する
+                                        if (result.value === true) {
+                                            localStorage.removeItem(key);
+                                            viewStorage();              // localStorage からのデータの取得とテーブルへ表示
+                                            let w_msg = "LocalStorageから" + key + " " + value + "を削除 (delete)　しました!"; 
+                                            Swal.fire({
+                                                  title : "Memo app" //タイトル設定
+                                                , html  :  w_msg //メッセージ内容をここに設定
+                                                , type  : "success" //ダイアログにアイコンを表示したい場合に設定する引数 warning, error, success, infor, question
+                                                , allowOutsideClick  :  false   //枠外クリックは許可しない
+                                            });
+                                            document.getElementById("textKey").value = "";
+                                            document.getElementById("textMemo").value = "";
+                                        }
+                                    });
+                                }
+                        }, false
+                    );
+                    
+
+                // version-up5 add-end
             };
 
         // 4.LocalStorageからすべて削除
@@ -221,14 +259,17 @@ function viewStorage() {
         let td1 = document.createElement("td");
         let td2 = document.createElement("td");
         let td3 = document.createElement("td");
+        let td4 = document.createElement("td");
         list.appendChild(tr);
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
+        tr.appendChild(td4);
 
         td1.innerHTML = "<input name='chkbox1' type='checkbox'>" ;      //version-up2 chg: radio1 ==> chkbox1
         td2.innerHTML = w_key;
         td3.innerHTML = localStorage.getItem(w_key);
+        td4.innerHTML = "<img src='img/trash_icon.png' class='trash'>";
     }
 
         //　jQueryのplugin　tablesorterを使ってテーブルのソート
@@ -239,4 +280,5 @@ function viewStorage() {
 
         $("#table1").trigger("update"); //tablesort add
 };
+
 

@@ -103,6 +103,10 @@ textarea::placeholder{
   cursor: pointer; /*カーソルをポインターの形（かたち）にする*/
 }
 
+.trash{
+  cursor: pointer;
+}
+
 /********************************************************/
 /* レスポンシブ対応　メディアクエリを使ってCSSを切り替える */
 /* https://www.design-memo.com/coding/css-media-queries */

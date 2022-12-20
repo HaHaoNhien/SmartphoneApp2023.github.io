@@ -28,6 +28,7 @@ const c_3 = document.getElementById("c_3");
 
 //New Gameボタン取得
 const newgamebtn_display = document.getElementById("newgame-btn");
+const newgamebtn = document.getElementById("btn90");
 
 //Win or Lose Judgment Line
 const line1 = JudgLine(squaresArray, ["a_1","a_2","a_3"]);
@@ -202,6 +203,9 @@ function gameOver(status) {
         square.classList.add("js-unclickable");
     });
 
+    //display New Game button : display
+    newgamebtn_display.classList.remove("js-hidden");
+
     //winEffect
     if(status === "penguins") {
         //winner-line penguins high-light
@@ -241,6 +245,24 @@ function gameOver(status) {
 // **********************************************
 // NewGameボタン　クリック時　ゲーム初期化
 // **********************************************
+// classListの使い方まとめ: https://qiita/com/tomokichi_ruby/items/2460c5902d19b81cace5
+
+newgamebtn.addEventListener("click", () => {
+    flag = "pen-flag";
+    counter = 9;
+    winningLine = null;
+    squaresArray.forEach(function (square) {
+        square.classList.remove("js-pen-checked");
+        square.classList.remove("js-bear-checked");
+        square.classList.remove("js-unclickable");
+        square.classList.remove("js-pen-highLight");
+        square.classList.remove("js-bear-highLight");
+    });
+    setMessage("pen-turn");
+    newgamebtn_display.classList.add("js-hidden");
+    // snowfall stop
+    $(document).snowfall("clear");
+});
 
 //sound control
 let w_sound

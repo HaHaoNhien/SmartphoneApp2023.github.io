@@ -131,7 +131,7 @@ function isSelect(selectSquare) {
 
         selectSquare.classList.add("js-bear-checked");  //squareにはpenguinsを表示
         selectSquare.classList.add("js-unclickable");   //squareをクリックできないようにする
-        selectSquare.classList.add("js-clickable");     //squareがクリック可能かを判断するクラスを削除
+        selectSquare.classList.remove("js-clickable");     //squareがクリック可能かを判断するクラスを削除
 
         //white-bear win 
         if (isWinner("bear")) {
@@ -212,10 +212,10 @@ function gameOver(status) {
     let w_sound // wkサウンドの種類
     switch (status){
         case "penguins":
-            w_sound = gameSound[2];
+            w_sound = gameSound[3];
             break;
         case "bear":
-            w_sound = gameSound[3];
+            w_sound = gameSound[2];
             break;
         case "draw":
             w_sound = gameSound[4];

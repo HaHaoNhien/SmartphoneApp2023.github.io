@@ -114,6 +114,10 @@ header{
     background-size: contain;
 }
 
+/* non-protect マウスイベントを有効にする */
+.js-clickable {
+    content: "";
+}
 /*protect*/
 .js-unclickable {
     pointer-events: none;
@@ -140,6 +144,11 @@ header{
     cursor: pointer;
 }
 
+.message-container{
+    height: 320px;
+    margin-bottom: 0px;
+}
+
 
 /***************************************/
 /*BACK BUTTON*/
@@ -155,6 +164,7 @@ header{
 /* class = ".btn-container"*/
 .btn-container {
     padding-top: 40px;
+    text-align: center;
 }
 /* id = "btn90" */
 #btn90:hover {
@@ -186,6 +196,14 @@ footer> p{
     }
     .btn-container {
         padding-top: 2px;
+    }
+    /*　ヘッダー */
+    header {
+        font-size: 24px;
+    }
+    /* メッセージ　*/
+    #msgtext {
+        font-size: 20px;
     }
 }
 @media screen and (max-width: 480px) and (max-height: 900px) {

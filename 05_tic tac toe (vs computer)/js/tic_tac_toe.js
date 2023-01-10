@@ -1,6 +1,5 @@
 "use strict";
 
-let soundEndflag ="0"; //sound control
 
 //flagが"pen-flag"の時penguinsのターン,"bear-flag"の時bearのターン
 let flag = "pen-flag";
@@ -45,16 +44,23 @@ const lineArray = [line1, line2, line3, line4, line5, line6, line7, line8];
 let winningLine = null;
 
 //メッセージ
-const msgtxt1 = '<p class="image"><img src="img/hello-pinguin.gif"  width=150px height=150px ></p><p class="text">Penguins Attack!!!</p>';
-const msgtxt2 = '<p class="image"><img src="img/bear.gif" width=150px height=150px ></p><p class="text">WhiteBear Attack!!!</p>';
+const msgtxt1 = '<p class="image"><img src="img/hello-pinguin.gif"  width=150px height=150px ></p><p class="text">Penguins Attack!!! (your turn) </p>';
+const msgtxt2 = '<p class="image"><img src="img/bear.gif" width=150px height=150px ></p><p class="text">WhiteBear Attack!!! (computer turn) </p>';
 const msgtxt3 = '<p class="image"><img src="img/hello-pinguin.gif" width=150px height=150px ></p><p class="text animate__animated animate__lightSpeedInRight">Penguins Win!!!</p>';
 const msgtxt4 = '<p class="image"><img src="img/bear.gif" width=150px height=150px ></p><p class="text animate__animated animate__lightSpeedInLeft">WhiteBear Win!!!</p>';
 const msgtxt5 = '<p class="image"><img src="img/hello-pinguin.gif" width=150px height=150px ><img src="img/bear.gif" width=150px height=150px ></p><p class="text animate__bounceIn">Draw!!!</p>';
 
+let gameSound = ["sound/click_sound1.mp3","sound/click_sound2.mp3","sound/penwin_sound.mp3","sound/bearwin_sound.mp3","sound/draw_sound.mp3"];
 /********************************************/
 window.addEventListener("DOMContentLoaded",
     function() {
         setMessage("pen-turn");
+
+        // squareがクリック可能かを判断するクラスを追加
+        squaresArray.forEach(function (square) {
+            square.classList.add("js-clickable");
+        });
+
     }, false
 );
 
@@ -73,64 +79,65 @@ function JudgLine(targetArray, idArray) {
 //********************************************
 //クリックしたsquareに、penguinsかbearを表示、画像を表示したsquareはクリックできないようにする、win or lose Judgementの呼び出し
 
-a_1.addEventListener("click",
-    function() {
-        isSelect(a_1);
-    },false
-);
-//上記のコーディングと下記のコーディングは同じ意味
-a_2.addEventListener("click", () => {
-    isSelect(a_2);
+squaresArray.forEach(function (square) {
+    square.addEventListener("click",() => {
+        let gameOverFlg = isSelect(square); //gameStatusを返却
+
+        //GameOverではない場合、クマのターン（auto)
+        if (gameOverFlg === "0") {
+            const squaresBox = document.getElementById("squaresBox");
+            squaresBox.classList.add("js-unclickable"); //squares-box をクリックできないようにする
+            setTimeout(
+                function () {
+                    bearTurn();
+                },
+                "2000"
+            );
+        }
+    });
 });
-a_3.addEventListener("click", () => {
-    isSelect(a_3);
-});
-b_1.addEventListener("click", () => {
-    isSelect(b_1);
-});
-b_2.addEventListener("click", () => {
-    isSelect(b_2);
-});
-b_3.addEventListener("click", () => {
-    isSelect(b_3);
-});
-c_1.addEventListener("click", () => {
-    isSelect(c_1);
-});
-c_2.addEventListener("click", () => {
-    isSelect(c_2);
-});
-c_3.addEventListener("click", () => {
-    isSelect(c_3);
-});
+
 // *******************************************
 // クリックしたsquareにはpenguinsかbearを表示
 // 表示したところはクリックできないようにする
 // win  or lose 判定を呼び出す
 // *******************************************
 function isSelect(selectSquare) {
+    let gameOverFlg = "0";
     if(flag === "pen-flag") {
-        selectSquare.classList.add("js-pen-checked");
-        selectSquare.classList.add("js-unclickable");
+        // クリックサウンド 
+        let music = new Audio(gameSound[0]);
+        music.currentTime = 0;
+        music.play(); //再生
+
+        selectSquare.classList.add("js-pen-checked"); //squareにはpenguinsを表示
+        selectSquare.classList.add("js-unclickable"); //squareをクリックできないようにする
+        selectSquare.classList.remove("js-clickable");   //squareがクリック可能かを判断するクラスを削除
 
         //penguins win
         if (isWinner("penguins")) {
             setMessage("pen-win"); //display win message
             gameOver("penguins");
-            return;
+            return gameOverFlg  = "1";
         }
 
         setMessage("bear-turn");
         flag = "bear-flag";
     }else {
-        selectSquare.classList.add("js-bear-checked");
-        selectSquare.classList.add("js-unclickable");
+        // クリックサウンド 
+        let music = new Audio(gameSound[1]);
+        music.currentTime = 0;
+        music.play();　//再生
+
+        selectSquare.classList.add("js-bear-checked");  //squareにはpenguinsを表示
+        selectSquare.classList.add("js-unclickable");   //squareをクリックできないようにする
+        selectSquare.classList.add("js-clickable");     //squareがクリック可能かを判断するクラスを削除
 
         //white-bear win 
         if (isWinner("bear")) {
             setMessage("bear-win"); //display win message
             gameOver("bear");
-            return;
+            return gameOverFlg  = "1";
         }
 
         setMessage("pen-turn");
@@ -144,7 +151,9 @@ function isSelect(selectSquare) {
     if (counter === 0) {
         setMessage("draw");
         gameOver("draw");
+        return gameOverFlg  = "1";
     }
+    return gameOverFlg  = "0";
 }
 // **********************************************
 // 勝敗判定
@@ -198,10 +207,31 @@ function setMessage(id) {
 // ゲーム終了時の処理
 // **********************************************
 function gameOver(status) {
+
+    //GameOver　サウンド
+    let w_sound // wkサウンドの種類
+    switch (status){
+        case "penguins":
+            w_sound = gameSound[2];
+            break;
+        case "bear":
+            w_sound = gameSound[3];
+            break;
+        case "draw":
+            w_sound = gameSound[4];
+            break;   
+    }
+
+    let music = new Audio(w_sound);
+    music.currentTime = 0;
+    music.play(); //再生
+
     //all square unclickable
-    squaresArray.forEach(function (square) {
-        square.classList.add("js-unclickable");
-    });
+    //squaresArray.forEach(function (square) {
+    //    square.classList.add("js-unclickable");
+    //});
+
+    squaresBox.classList.add("js-unclickable");　//squares-boxをクリックできないようにする
 
     //display New Game button : display
     newgamebtn_display.classList.remove("js-hidden");
@@ -216,7 +246,7 @@ function gameOver(status) {
         }
         //penguins win!!! ==> snow color is pink
         $(document).snowfall({
-            flakeColor : "rgb(255,240,245",
+            flakeColor : "rgb(255,240,245)",
             maxSpeed   : 3,
             minSpeed   : 1,
             maxSize    : 20,
@@ -232,7 +262,7 @@ function gameOver(status) {
         }
         //penguins win!!! ==> snow color is pink
         $(document).snowfall({
-            flakeColor : "rgb(255,240,245",
+            flakeColor : "rgb(255,240,245)",
             maxSpeed   : 3,
             minSpeed   : 1,
             maxSize    : 20,
@@ -255,26 +285,30 @@ newgamebtn.addEventListener("click", () => {
         square.classList.remove("js-pen-checked");
         square.classList.remove("js-bear-checked");
         square.classList.remove("js-unclickable");
-        square.classList.remove("js-pen-highLight");
-        square.classList.remove("js-bear-highLight");
+        square.classList.remove("js-pen_highLight");
+        square.classList.remove("js-bear_highLight");
+        square.classList.remove("js-clickable");
     });
+
+    squaresBox.classList.add("js-unclickable");//squareがクリック可能かを判断するクラスを追加
+    
     setMessage("pen-turn");
     newgamebtn_display.classList.add("js-hidden");
     // snowfall stop
     $(document).snowfall("clear");
 });
 
-//sound control
-let w_sound
-let music
-function soundControl(status, w_sound) {
-  if (status === 'start') {
-    music = new Audio(w_sound)
-    music.currentTime = 0
-    music.play()
-  } else if (status === 'end') {
-    music.pause()
-    music.currentTime = 0
-  }
-}
 
+
+function bearTurn() {
+    let gameOverFlg = "0";
+    let bearSquare = squaresArray.filter(function(square){
+        return square.classList.contains("js-clickable");
+    })
+    
+    let n = Math.floor(Math.random() * bearSquare.length);
+    gameOverFlg = isSelect(bearSquare[n]);
+    if (gameOverFlg = "0") {
+        squaresBox.classList.remove("js-unclickable"); 
+    }
+}

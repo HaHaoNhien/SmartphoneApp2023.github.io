@@ -363,12 +363,16 @@ function isReach(status) {
         }
 
         // クマかペンギンのリーチ行ありの場合、空いているマス目を選択する
-
-        isSelect.some(function (square){
-            square.classList.contains("js-clickable");
+        if(bearTurnEnd === "1"){
+            lineArray.some(function (square){
+                square.classList.contains("js-clickable");
+                isSelect(square);
+                
+            })
+    
             return true;
-        })
 
+        }
         return true;
     });
 

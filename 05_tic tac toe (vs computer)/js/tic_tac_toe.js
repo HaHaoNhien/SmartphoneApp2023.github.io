@@ -287,10 +287,10 @@ newgamebtn.addEventListener("click", () => {
         square.classList.remove("js-unclickable");
         square.classList.remove("js-pen_highLight");
         square.classList.remove("js-bear_highLight");
-        square.classList.remove("js-clickable");
+        square.classList.add("js-clickable");
     });
 
-    squaresBox.classList.add("js-unclickable");//squareがクリック可能かを判断するクラスを追加
+    squaresBox.classList.remove("js-unclickable");//squareがクリック可能かを判断するクラスを追加
     
     setMessage("pen-turn");
     newgamebtn_display.classList.add("js-hidden");
@@ -301,14 +301,76 @@ newgamebtn.addEventListener("click", () => {
 
 
 function bearTurn() {
+    let bearTurnEnd = "0";
     let gameOverFlg = "0";
-    let bearSquare = squaresArray.filter(function(square){
-        return square.classList.contains("js-clickable");
-    })
-    
-    let n = Math.floor(Math.random() * bearSquare.length);
-    gameOverFlg = isSelect(bearSquare[n]);
-    if (gameOverFlg = "0") {
-        squaresBox.classList.remove("js-unclickable"); 
+
+    while(bearTurnEnd === "0") {
+        //クマのリーチ行検索　（attack)
+        bearTurnEnd = isReach("bear");
+        if (bearTurnEnd === "1") {  //クマのリーチ行あり。。。この一手で終わり
+            gameOverFlg = "1";
+            break; //while を終了
+        }
+
+        //ペンギンのリーチ行検索（defense)
+        bearTurnEnd = isReach("penguins");
+        if (bearTurnEnd === "1") {
+            break; //while　を終了
+        }
+
+        //まだマス目を選んでいない場合、クリックできるマス目をランダムに選ぶ
+        const bearSquare = squaresArray.filter(function(square){
+            return square.classList.contains("js-clickable");
+        })
+        
+        let n = Math.floor(Math.random() * bearSquare.length);
+        gameOverFlg = isSelect(bearSquare[n]);
+        break;  //while を終了
+
     }
+
+    //GameOver ではない場合
+    if (gameOverFlg === "0") {
+        squaresBox.classList.remove("js-unclickable");
+    }
+}
+
+// ********************************************************
+// リーチ行を探す
+// ********************************************************
+function isReach(status) {
+    let bearTurnEnd = "0"; 
+
+    lineArray.some(function (line) {
+        let bearCheckCnt = 0;   //クマがチェックされている数
+        let penCheckCnt = 0;    //ペンギンがチェックされている数
+
+        line.forEach(function (square) {
+            square.classList.contains("js-bear-checked");
+            bearCheckCnt += 1;
+            square.classList.contains("js-pen-checked");
+            penCheckCnt += 1;
+        });
+
+        //　クマのリーチ行検索時に、クマのリーチ行あり
+        if (status === "bear" && bearCheckCnt === 2 && penCheckCnt === 0) {
+            bearTurnEnd = "1";
+        }
+
+        //　ペンギンのリーチ行検索時に、ペンギンのリーチ行あり
+        if (status === "penguins" && bearCheckCnt === 0 && penCheckCnt === 2) {
+            bearTurnEnd = "1";
+        }
+
+        // クマかペンギンのリーチ行ありの場合、空いているマス目を選択する
+
+        isSelect.some(function (square){
+            square.classList.contains("js-clickable");
+            return true;
+        })
+
+        return true;
+    });
+
+    return bearTurnEnd;
 }

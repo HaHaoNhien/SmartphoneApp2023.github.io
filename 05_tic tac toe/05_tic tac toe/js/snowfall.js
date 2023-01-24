@@ -1,6 +1,4 @@
-// snowfall stop
- $(document).snowfall("clear");
-        
+    
 // jQueryのsnowfall
  $(document).ready(function(){
         $(document).snowfall({

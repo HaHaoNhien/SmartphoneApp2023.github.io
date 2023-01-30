@@ -107,35 +107,34 @@ function LevelSetting(index) {
   level_1.classList.remove('level-non-selected')
   level_2.classList.remove('level-non-selected')
   level_3.classList.remove('level-non-selected')
-}
-
-//tictactoe_access
-if (sessionStorage.getItem('tic_tac_toe_access')) {
-  switch (index) {
-    case 0:
-      sessionStorage.setItem('tic_tac_toe_access', '1')
-      level_1.classList.add('level-selected')
-      level_2.classList.add('level-non-selected')
-      level_3.classList.add('level-non-selected')
-      break
-    case 1:
-      sessionStorage.setItem('tic_tac_toe_access', '2')
-      level_1.classList.add('level-non-selected')
-      level_2.classList.add('level-selected')
-      level_3.classList.add('level-non-selected')
-      break
-    case 2:
-      sessionStorage.setItem('tic_tac_toe_access', '3')
-      level_1.classList.add('level-non-selected')
-      level_2.classList.add('level-non-selected')
-      level_3.classList.add('level-selected')
-      break
+  //tictactoe_access
+  if (sessionStorage.getItem('tic_tac_toe_access')) {
+    switch (index) {
+      case 0:
+        sessionStorage.setItem('tic_tac_toe_access', '1')
+        level_1.classList.add('level-selected')
+        level_2.classList.add('level-non-selected')
+        level_3.classList.add('level-non-selected')
+        break
+      case 1:
+        sessionStorage.setItem('tic_tac_toe_access', '2')
+        level_1.classList.add('level-non-selected')
+        level_2.classList.add('level-selected')
+        level_3.classList.add('level-non-selected')
+        break
+      case 2:
+        sessionStorage.setItem('tic_tac_toe_access', '3')
+        level_1.classList.add('level-non-selected')
+        level_2.classList.add('level-non-selected')
+        level_3.classList.add('level-selected')
+        break
+    }
+  } else {
+    sessionStorage.setItem('tic_tac_toe_access', '1')
+    level_1.classList.add('level-selected')
+    level_2.classList.add('level-non-selected')
+    level_3.classList.add('level-non-selected')
   }
-} else {
-  sessionStorage.setItem('tic_tac_toe_access', '1')
-  level_1.classList.add('level-selected')
-  level_2.classList.add('level-non-selected')
-  level_3.classList.add('level-non-selected')
 }
 
 //********************************************
@@ -182,7 +181,7 @@ squaresArray.forEach(function (square) {
       squaresBox.classList.add('js-unclickable') //squares-box をクリックできないようにする
       setTimeout(function () {
         bearTurn()
-      }, '2000')
+      }, '500')
     }
   })
 })

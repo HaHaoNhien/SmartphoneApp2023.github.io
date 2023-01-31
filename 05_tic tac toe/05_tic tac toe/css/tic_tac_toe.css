@@ -15,14 +15,15 @@ body {
   font-size: 1.6rem; /* 16px */
   font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN',
     'Hiragino Sans', Meiryo, sans-serif;
-  background-image: linear-gradient(
+  /*background-image: linear-gradient(
     145deg,
     #2e5894,
     #333399,
     #6699cc,
     #a2a2d0,
     #ffffff
-  );
+  );*/
+  background-image: url(../img/background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   /* overflow: hidden; */
@@ -137,7 +138,7 @@ header {
   border-radius: 10px;
   color: whitesmoke;
   font-size: 24px;
-  background: rgb(26, 212, 212);
+  background: rgb(95, 156, 203);
   user-select: none;
   cursor: pointer;
 }

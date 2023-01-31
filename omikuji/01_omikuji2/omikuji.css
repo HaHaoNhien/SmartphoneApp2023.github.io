@@ -13,10 +13,9 @@ body {
   font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN',
     'Hiragino Sans', Meiryo, sans-serif;
   /*background: rgb(233, 168, 227);*/
-  background-image: url(img/david-edelstein-N4DbvTUDikw-unsplash.jpg);
+  background-image: url(img/background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  overflow: hidden;
 }
 p {
   margin: 0;

@@ -67,7 +67,7 @@ header {
   box-shadow: 0 5px 0 grey;
 }
 footer {
-  position: absolute;
+  position: sticky;
   bottom: 5px;
   width: 100%;
   margin: 0px;

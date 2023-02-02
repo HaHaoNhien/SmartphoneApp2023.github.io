@@ -30,8 +30,9 @@ body {
 /*******************************************************/
 h1 {
   font-size: 3em;
-  color: rgb(26, 212, 212);
+  color: rgb(116, 216, 176);
   text-align: center;
+  font-family: 'Rajdhani', sans-serif;
 }
 /*******************************************************/
 /* 計算機全体                                           */
@@ -63,9 +64,10 @@ input[type='number'] {
   width: 3em;
   line-height: 1.5em;
   font-size: 2em;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
   border: solid 0.01em grey;
+  border-radius: 5%;
 }
 
 #calcType {
@@ -74,9 +76,10 @@ input[type='number'] {
   width: 3em;
   line-height: 1.5em;
   font-size: 2em;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
   border: solid 0.01em grey;
+  border-radius: 5%;
 }
 
 /*#btnEqual {
@@ -108,13 +111,17 @@ input[type='number'] {
 }
 
 #result {
+  color: rgb(0, 174, 81);
+  background-color: aliceblue;
+  border-radius: 20%;
   margin: 0.05em;
   padding: 0;
-  width: 3em;
+  width: 1em;
   line-height: 1.5em;
-  font-size: 2em;
+  font-size: 3em;
   text-align: left;
   vertical-align: middle;
+  text-align: center;
 }
 /*******************************************************/
 /* フッター                                             */

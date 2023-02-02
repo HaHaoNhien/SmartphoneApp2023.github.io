@@ -27,8 +27,12 @@ body {
 /*******************************************************/
 h1 {
   font-size: 3em;
-  color: rgb(26, 212, 212);
+  color: rgb(82, 216, 162);
   text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+p {
+  color: rgb(255, 248, 182);
 }
 /*******************************************************/
 /* 計算機全体                                           */
@@ -93,8 +97,8 @@ h1 {
 }
 #result {
   width: 196px;
-  color: grey;
-  border: solid 1px grey;
+  color: rgb(255, 255, 255);
+  border: solid 1px rgb(255, 255, 255);
   text-align: right;
 }
 #cancel {

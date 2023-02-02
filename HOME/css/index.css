@@ -212,27 +212,27 @@ footer > p {
 }
 @media screen and (max-width: 480px) and (max-height: 900px) {
   body {
-    background-position: 75% 0%;
+    background-position: 75% 10%;
     background-size: auto 900px;
   }
 }
 
 @media screen and (max-width: 480px) and (max-height: 667px) {
   body {
-    background-position: 50% 0%;
+    background-position: 50% 10%;
     background-size: auto 700px;
   }
 }
 
 @media screen and (max-width: 1050px) and (max-height: 1200px) {
   body {
-    background-position: 75% 0%;
+    background-position: 75% 20%;
     background-size: auto 1200px;
   }
 }
 @media screen and (max-height: 1200px) {
   body {
-    background-position: 75% 0%;
+    background-position: 75% 50%;
     background-size: auto 1200px;
   }
 }

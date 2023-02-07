@@ -7,7 +7,7 @@ window.addEventListener(
     item.forEach(function (element, index) {
       setTimeout(function () {
         element.classList.add('fade-in')
-      }, 300 * index)
+      }, 500 * index)
     })
   },
   false,
